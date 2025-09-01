@@ -1,0 +1,883 @@
+
+
+:root {
+    /* Paleta de Colores */
+    --bg-dark: #0A0D14; --bg-light-dark: #1A1F2C; --bg-card: rgba(26, 31, 44, 0.8);
+    --border-color: rgba(105, 126, 157, 0.2); --text-primary: #E0E7EB; --text-secondary: #A9B3C7;
+    --accent-blue: #4A90E2; --accent-gold: #FFD700; --font-main: 'Montserrat', sans-serif;
+    --font-heading: 'Orbitron', sans-serif; --max-width: 1200px; --nav-height: 80px;
+    --border-radius-sm: 8px; --border-radius-md: 15px; --shadow-md: 0 10px 30px rgba(0,0,0,0.4);
+    --shadow-lg: 0 15px 45px rgba(0,0,0,0.6); --gradient-card-border: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-gold) 100%);
+}
+
+/* --- ESTILOS GLOBALES Y RESET --- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+body {
+    font-family: var(--font-main); background-color: var(--bg-dark); color: var(--text-primary);
+    overflow-x: hidden; position: relative; line-height: 1.6; -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+::selection { background-color: var(--accent-blue); color: var(--bg-dark); }
+
+/* --- NAVEGACIÓN --- */
+.navbar {
+    position: fixed; width: 100%; top: 0; left: 0; height: var(--nav-height); display: flex;
+    align-items: center; z-index: 1000; background: rgba(10, 13, 20, 0.8); backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.navbar .container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.navbar .logo { font-family: var(--font-heading); font-size: clamp(1.5rem, 4vw, 1.8rem); font-weight: 700; color: var(--text-primary); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; }
+.navbar .logo span { color: var(--accent-gold); text-shadow: 0 0 5px rgba(255, 215, 0, 0.6); }
+.navbar .nav-links a { color: var(--text-secondary); text-decoration: none; margin-left: 35px; font-weight: 500; position: relative; padding-bottom: 5px; transition: color 0.3s ease; }
+.navbar .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; transform: scaleX(0); transform-origin: left; width: 100%; height: 2px; background: var(--accent-blue); transition: transform 0.3s ease; }
+.navbar .nav-links a:hover::after, .navbar .nav-links a.active::after { transform: scaleX(1); }
+.navbar .nav-links a:hover, .navbar .nav-links a.active { color: var(--accent-blue); }
+.navbar .nav-links a:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 5px; border-radius: 2px; }
+
+.menu-toggle { display: none; flex-direction: column; justify-content: space-around; width: 30px; height: 24px; background: transparent; border: none; cursor: pointer; z-index: 1100; padding: 0; }
+.menu-toggle:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 5px; border-radius: 2px; }
+.menu-toggle span { width: 100%; height: 3px; background-color: var(--text-primary); border-radius: 2px; transition: transform 0.3s linear, opacity 0.3s linear; transform-origin: center; }
+.menu-toggle.active span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+.menu-toggle.active span:nth-child(2) { opacity: 0; }
+.menu-toggle.active span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+
+/* --- SECCIÓN HERO --- */
+.hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; padding: var(--nav-height) 20px 0; background: var(--bg-dark); }
+.hero-bg-overlay { position: absolute; inset: 0; background-image: url('data:image/svg+xml;charset=UTF-8,<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="diagonal-lines" patternUnits="userSpaceOnUse" width="10" height="10"><path d="M-1,1 l2,-2 M0,10 l10,-10 M9,11 l2,-2" stroke="rgba(74, 144, 226, 0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23diagonal-lines)"/></svg>'); opacity: 0.5; z-index: 1; animation: fadePulse 5s infinite alternate ease-in-out; }
+@keyframes fadePulse { from { opacity: 0.3; } to { opacity: 0.6; } }
+.hero .spotlight { position: absolute; inset: 0; background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(74, 144, 226, 0.2) 0%, transparent 45%); z-index: 2; }
+.hero .container { position: relative; z-index: 3; max-width: 900px; }
+
+/* --- ESTILOS TIPOGRÁFICOS --- */
+h1, h2, h3 { font-family: var(--font-heading); font-weight: 700; color: var(--text-primary); letter-spacing: 0.5px; }
+h1 { font-size: clamp(2.5rem, 5.5vw, 4.5rem); line-height: 1.2; margin-bottom: 25px; text-shadow: 0 0 15px rgba(74, 144, 226, 0.4); }
+h2 { font-size: clamp(2.2rem, 4vw, 3rem); margin-bottom: 15px; }
+h3 { font-size: clamp(1.4rem, 3vw, 1.6rem); margin-bottom: 18px; }
+.hero .typing-text { background: linear-gradient(90deg, var(--accent-blue), var(--accent-gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; }
+p { font-size: clamp(1rem, 1.5vw, 1.15rem); color: var(--text-secondary); line-height: 1.7; margin-bottom: 40px; max-width: 65ch; }
+
+/* --- BOTONES Y ENLACES --- */
+.btn { display: inline-block; padding: 15px 35px; background: var(--accent-blue); color: var(--text-primary); text-decoration: none; border-radius: var(--border-radius-sm); font-weight: 600; border: 1px solid var(--accent-blue); text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3); transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+.btn:hover { background: var(--accent-gold); border-color: var(--accent-gold); color: var(--bg-dark); transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4); }
+.btn:focus-visible { outline: 3px solid var(--accent-gold); outline-offset: 3px; }
+
+/* --- LAYOUTS DE SECCIÓN Y GRID --- */
+.container { width: 100%; max-width: var(--max-width); margin: 0 auto; padding: 0 25px; }
+section { padding: 120px 0; position: relative; background-color: var(--bg-dark); z-index: 5; }
+#technologies, #testimonials, #contact { background-color: var(--bg-light-dark); }
+.section-header { text-align: center; margin-bottom: 70px; position: relative; }
+.section-header h2::after { content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: var(--gradient-card-border); border-radius: 2px; }
+.section-header p { margin: 25px auto 0; font-size: clamp(1rem, 1.2vw, 1.1rem); }
+
+.grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; }
+
+/* --- TARJETAS --- */
+.card { background-color: var(--bg-card); position: relative; border-radius: var(--border-radius-md); padding: 40px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: var(--shadow-md); transition: transform 0.2s ease-out, box-shadow 0.3s ease; transform-style: preserve-3d; overflow: hidden; border: 1px solid transparent; }
+.card::before { content: ''; position: absolute; inset: 0; border-radius: var(--border-radius-md); padding: 1px; background: var(--gradient-card-border); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; transition: opacity 0.3s ease; opacity: 0; }
+.card:hover::before { opacity: 1; }
+.card:hover { box-shadow: var(--shadow-lg), 0 0 30px rgba(74, 144, 226, 0.4); }
+.card .icon { font-size: 3rem; color: var(--accent-gold); margin-bottom: 25px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+.card .card-link { color: var(--accent-blue); text-decoration: none; font-weight: 600; font-size: 1.05rem; display: inline-flex; align-items: center; transition: color 0.3s ease; margin-top: auto; }
+.card .card-link i { margin-left: 8px; transition: transform 0.3s ease; }
+.card .card-link:hover { color: var(--accent-gold); }
+.card .card-link:hover i { transform: translateX(5px); }
+
+/* --- COMPONENTES ESPECÍFICOS --- */
+.service-card { display: flex; flex-direction: column; }
+
+/* BLOQUE DE CÓDIGO RESTAURADO PARA LA SECCIÓN DE TECNOLOGÍAS */
+.tech-icons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 25px; }
+.tech-card {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius-md);
+    padding: 25px 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 140px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.tech-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    border-color: var(--accent-blue);
+    box-shadow: 0 10px 25px rgba(74, 144, 226, 0.3), 0 0 20px rgba(74, 144, 226, 0.2);
+}
+.tech-card .tech-icon {
+    font-size: 3.5rem;
+    color: var(--accent-blue);
+    margin-bottom: 15px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.tech-card:hover .tech-icon {
+    color: var(--accent-gold);
+    transform: scale(1.1);
+}
+.tech-card p {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+/* FIN DEL BLOQUE RESTAURADO */
+
+.project-card { display: flex; flex-direction: column; background-color: var(--bg-card); border-radius: var(--border-radius-md); overflow: hidden; box-shadow: var(--shadow-md); }
+.project-card .card-image { aspect-ratio: 16 / 10; width: 100%; background-size: cover; background-position: center; transition: transform 0.4s ease; }
+.project-card:hover .card-image { transform: scale(1.05); }
+.project-card .card-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
+.project-card .tags { margin-top: auto; padding-top: 15px; display: flex; flex-wrap: wrap; gap: 8px; }
+.project-card .tags span { background-color: rgba(74, 144, 226, 0.15); color: var(--accent-blue); padding: 6px 12px; border-radius: var(--border-radius-sm); font-size: 0.85rem; border: 1px solid rgba(74, 144, 226, 0.3); }
+.testimonial-card img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--accent-gold); margin: 0 auto 25px; object-fit: cover; box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+
+/* --- SECCIÓN DE CONTACTO --- */
+.contact-grid { display: flex; flex-direction: column; gap: 40px; }
+.contact-info, .contact-form { padding: 30px; background-color: var(--bg-card); border-radius: var(--border-radius-md); box-shadow: var(--shadow-md); border: 1px solid var(--border-color); }
+.contact-info .info-item { display: flex; align-items: flex-start; margin-bottom: 20px; color: var(--text-secondary); font-size: 1.05rem; }
+.contact-info .info-item i { font-size: 1.6rem; color: var(--accent-gold); margin-right: 20px; width: 30px; flex-shrink: 0; text-align: center; }
+.contact-form .form-group { margin-bottom: 20px; }
+.contact-form input, .contact-form textarea { width: 100%; padding: 18px 20px; background-color: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); color: var(--text-primary); font-family: var(--font-main); font-size: 1rem; transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; }
+.contact-form textarea { resize: vertical; min-height: 120px; }
+.contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 15px rgba(74, 144, 226, 0.3); background-color: var(--bg-card); }
+.contact-form input:focus-visible, .contact-form textarea:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
+
+/* --- FOOTER --- */
+.footer { padding: 60px 0; text-align: center; border-top: 1px solid var(--border-color); background-color: var(--bg-dark); }
+.footer .social-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
+.footer .social-links a { color: var(--text-secondary); font-size: 1.6rem; display: inline-block; transition: color 0.3s ease, transform 0.3s ease; }
+.footer .social-links a:hover { color: var(--accent-gold); transform: translateY(-3px) scale(1.1); }
+.footer p { color: var(--text-secondary); margin: 0; font-size: 0.95rem; }
+
+/* --- ANIMACIONES DE SCROLL (PARA ESCRITORIO) --- */
+.hidden { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; will-change: opacity, transform; }
+.visible { opacity: 1; transform: none; }
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+@media (min-width: 993px) {
+    .contact-grid {
+        flex-direction: row;
+        gap: 50px;
+    }
+    .contact-info { flex: 1; }
+    .contact-form { flex: 1.5; }
+}
+
+@media (max-width: 992px) {
+    .menu-toggle { display: flex; }
+    .navbar .nav-links {
+        position: fixed; top: 0; right: 0; width: min(75vw, 320px); height: 100vh; padding-top: var(--nav-height);
+        background: rgba(26, 31, 44, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
+        transition: transform 0.4s ease-in-out; transform: translateX(100%);
+        box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+    }
+    .navbar .nav-links.active { transform: translateX(0); }
+    .navbar .nav-links a { margin: 20px 0; font-size: 1.2rem; }
+}
+
+@media (max-width: 768px) {
+    section { padding: 100px 0; }
+    .hero { min-height: 90vh; padding: 120px 0 60px; }
+    .card { padding: 30px; }
+    .footer { padding: 50px 0; }
+    h2 { font-size: clamp(2rem, 5vw, 2.5rem); }
+    .grid-layout { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .tech-icons-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
+}
+
+@media (max-width: 600px) {
+    .grid-layout:not(.tech-icons-grid) {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .container { padding: 0 20px; }
+    section { padding: 80px 0; }
+    .btn { padding: 12px 25px; font-size: 0.9rem; }
+    h2 { font-size: clamp(1.8rem, 7vw, 2.2rem); }
+    h3 { font-size: clamp(1.2rem, 6vw, 1.4rem); }
+    .card, .contact-info, .contact-form { padding: 25px; }
+}
+
+.contact-info .info-item span { overflow-wrap: break-word; word-wrap: break-word; }
+
+
+/* Btn Whatsapp*/
+
+.whatsapp-button {
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    text-decoration: none;
+    z-index: 9999;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: whatsappPulse 2s infinite;
+    border: 3px solid transparent;
+    cursor: pointer;
+    outline: none;
+}
+
+.whatsapp-button:hover {
+    background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);
+    transform: scale(1.1);
+    box-shadow: 0 12px 35px rgba(18, 140, 126, 0.6);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.whatsapp-button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+
+.whatsapp-button i {
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-button:hover i {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Animación de pulso personalizada */
+@keyframes whatsappPulse {
+    0% {
+        box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    }
+    50% {
+        box-shadow: 0 8px 35px rgba(37, 211, 102, 0.7);
+    }
+    100% {
+        box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    }
+}
+
+/* RESPONSIVE BREAKPOINTS */
+
+/* Móviles muy pequeños (hasta 320px) */
+@media screen and (max-width: 320px) {
+    .whatsapp-button {
+        right: 8px;
+        bottom: 8px;
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+        border-width: 2px;
+    }
+}
+
+/* Móviles pequeños (321px - 480px) */
+@media screen and (min-width: 321px) and (max-width: 480px) {
+    .whatsapp-button {
+        right: 10px;
+        bottom: 10px;
+        width: 55px;
+        height: 55px;
+        font-size: 24px;
+    }
+}
+
+/* Móviles medianos (481px - 767px) */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    .whatsapp-button {
+        right: 12px;
+        bottom: 12px;
+        width: 58px;
+        height: 58px;
+        font-size: 26px;
+    }
+}
+
+/* Tablets pequeñas (768px - 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .whatsapp-button {
+        right: 20px;
+        bottom: 20px;
+        width: 65px;
+        height: 65px;
+        font-size: 30px;
+    }
+    
+    .whatsapp-button:hover {
+        transform: scale(1.12);
+    }
+}
+
+/* Desktop pequeño (1025px - 1366px) */
+@media screen and (min-width: 1025px) and (max-width: 1366px) {
+    .whatsapp-button {
+        right: 25px;
+        bottom: 25px;
+        width: 68px;
+        height: 68px;
+        font-size: 31px;
+    }
+    
+    .whatsapp-button:hover {
+        transform: scale(1.15);
+    }
+}
+
+/* Desktop grande (1367px - 1920px) */
+@media screen and (min-width: 1367px) and (max-width: 1920px) {
+    .whatsapp-button {
+        right: 30px;
+        bottom: 30px;
+        width: 70px;
+        height: 70px;
+        font-size: 32px;
+    }
+    
+    .whatsapp-button:hover {
+        transform: scale(1.18);
+    }
+}
+
+/* Pantallas ultra grandes (1921px+) */
+@media screen and (min-width: 1921px) {
+    .whatsapp-button {
+        right: 35px;
+        bottom: 35px;
+        width: 75px;
+        height: 75px;
+        font-size: 35px;
+    }
+    
+    .whatsapp-button:hover {
+        transform: scale(1.2);
+    }
+}
+
+/* ORIENTACIÓN Y CASOS ESPECIALES */
+
+/* Orientación landscape en móviles */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .whatsapp-button {
+        right: 10px;
+        bottom: 10px;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+}
+
+/* Tablets en landscape */
+@media screen and (min-width: 768px) and (max-height: 1024px) and (orientation: landscape) {
+    .whatsapp-button {
+        right: 15px;
+        bottom: 15px;
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+    }
+}
+
+/* SOPORTE PARA DISPOSITIVOS MODERNOS */
+
+/* Safe Area para dispositivos con notch */
+@supports (bottom: env(safe-area-inset-bottom)) {
+    .whatsapp-button {
+        bottom: calc(15px + env(safe-area-inset-bottom));
+        right: calc(15px + env(safe-area-inset-right));
+    }
+    
+    @media screen and (min-width: 768px) {
+        .whatsapp-button {
+            bottom: calc(20px + env(safe-area-inset-bottom));
+            right: calc(20px + env(safe-area-inset-right));
+        }
+    }
+    
+    @media screen and (min-width: 1025px) {
+        .whatsapp-button {
+            bottom: calc(25px + env(safe-area-inset-bottom));
+            right: calc(25px + env(safe-area-inset-right));
+        }
+    }
+}
+
+/* ACCESIBILIDAD Y PREFERENCIAS */
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+    .whatsapp-button {
+        box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .whatsapp-button:hover {
+        box-shadow: 0 12px 35px rgba(18, 140, 126, 0.8);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* Reducir movimiento para usuarios sensibles */
+@media (prefers-reduced-motion: reduce) {
+    .whatsapp-button {
+        animation: none;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .whatsapp-button:hover {
+        transform: none;
+    }
+    
+    .whatsapp-button:hover i {
+        transform: none;
+    }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+    .whatsapp-button {
+        border: 3px solid #000;
+        background: #25D366;
+    }
+    
+    .whatsapp-button:hover {
+        border-color: #fff;
+        background: #128C7E;
+    }
+}
+
+/* ESTADOS DE FOCUS PARA ACCESIBILIDAD */
+
+.whatsapp-button:focus {
+    outline: 3px solid #25D366;
+    outline-offset: 3px;
+}
+
+.whatsapp-button:focus-visible {
+    outline: 3px solid #25D366;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px rgba(37, 211, 102, 0.3);
+}
+
+/* ANIMACIÓN DE ENTRADA */
+
+@keyframes whatsappSlideIn {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.whatsapp-button {
+    animation: whatsappSlideIn 0.5s ease-out, whatsappPulse 2s infinite 0.5s;
+}
+
+/* TOOLTIP OPCIONAL  */
+
+.whatsapp-button::before {
+    content: "¡Contáctanos por WhatsApp!";
+    position: absolute;
+    right: 75px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.whatsapp-button::after {
+    content: "";
+    position: absolute;
+    right: 65px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-left-color: rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.whatsapp-button:hover::before,
+.whatsapp-button:hover::after {
+    opacity: 1;
+}
+
+/* Ocultar tooltip en móviles */
+@media screen and (max-width: 768px) {
+    .whatsapp-button::before,
+    .whatsapp-button::after {
+        display: none;
+    }
+}
+
+
+.marquee {
+    overflow: hidden;
+    width: 100%;
+}
+
+.marquee-content {
+    display: flex;
+    gap: 40px;
+    animation: scroll-left 30s linear infinite;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.tech-card {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.tech-card i {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+
+
+/*spalsh screm */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+    cursor: pointer; /* Indica que es clickeable */
+}
+
+#splash-screen.fade-out {
+    opacity: 0 !important;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Estilo del logo */
+#splash-screen img {
+    width: 300px;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    transform: scale(0);
+    opacity: 0;
+    animation: logoAppear 2s ease-out forwards;
+    filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.6))
+            drop-shadow(0 0 60px rgba(102, 126, 234, 0.4))
+            drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+    border-radius: 10px;
+    position: relative;
+    transition: filter 0.3s ease; /* Suaviza cambios en hover */
+}
+
+/* Hover effect en el logo */
+#splash-screen:hover img {
+    filter: drop-shadow(0 0 40px rgba(102, 126, 234, 0.8))
+            drop-shadow(0 0 80px rgba(102, 126, 234, 0.6))
+            drop-shadow(0 25px 50px rgba(0, 0, 0, 0.4));
+}
+
+/* Efecto de brillo/halo */
+#splash-screen::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, 
+        rgba(102, 126, 234, 0.2) 0%, 
+        rgba(102, 126, 234, 0.1) 30%, 
+        transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    animation: haloGlow 2s ease-out 0.5s forwards;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Hover effect en el halo */
+#splash-screen:hover::before {
+    opacity: 1 !important;
+    background: radial-gradient(circle, 
+        rgba(102, 126, 234, 0.3) 0%, 
+        rgba(102, 126, 234, 0.15) 30%, 
+        transparent 70%);
+}
+
+/* Partículas de fondo */
+#splash-screen::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(102, 126, 234, 0.7), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(118, 75, 162, 0.6), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(102, 126, 234, 0.5), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(118, 75, 162, 0.4), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(102, 126, 234, 0.6), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: particles 20s linear infinite;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Indicador visual de que se puede hacer click */
+#splash-screen:hover::after {
+    animation-duration: 10s; /* Acelera las partículas en hover */
+}
+
+/* ========================================
+   ANIMACIONES
+   ======================================== */
+
+/* Animación de aparición del logo */
+@keyframes logoAppear {
+    0% {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+        filter: drop-shadow(0 0 0px rgba(102, 126, 234, 0))
+                drop-shadow(0 0 0px rgba(102, 126, 234, 0))
+                drop-shadow(0 0 0px rgba(0, 0, 0, 0));
+    }
+    50% {
+        transform: scale(1.1) rotate(0deg);
+        opacity: 0.8;
+        filter: drop-shadow(0 0 40px rgba(102, 126, 234, 0.8))
+                drop-shadow(0 0 80px rgba(102, 126, 234, 0.6))
+                drop-shadow(0 25px 50px rgba(0, 0, 0, 0.4));
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+        filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.6))
+                drop-shadow(0 0 60px rgba(102, 126, 234, 0.4))
+                drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+    }
+}
+
+/* Animación del halo */
+@keyframes haloGlow {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+}
+
+/* Animación de partículas */
+@keyframes particles {
+    0% {
+        transform: translateY(0px);
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-100px);
+        opacity: 0.5;
+    }
+}
+
+/* Animación de salida suave */
+@keyframes fadeOutSplash {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+/* ========================================
+   ESTADOS INTERACTIVOS
+   ======================================== */
+
+/* Estado activo (cuando se hace click) */
+#splash-screen:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* Estado de fading manual */
+#splash-screen.manual-fade {
+    animation: fadeOutSplash 0.8s ease-out forwards;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+    #splash-screen img {
+        width: 200px;
+        max-height: 200px;
+    }
+    
+    #splash-screen::before {
+        width: 300px;
+        height: 300px;
+    }
+    
+    /* En móviles, menos efectos hover para mejor rendimiento */
+    #splash-screen:hover img,
+    #splash-screen:hover::before {
+        filter: inherit;
+        background: inherit;
+    }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    #splash-screen img {
+        width: 150px;
+        max-height: 150px;
+    }
+    
+    #splash-screen::before {
+        width: 200px;
+        height: 200px;
+    }
+    
+    /* Partículas menos intensas en móviles */
+    #splash-screen::after {
+        opacity: 0.3;
+        animation-duration: 30s; /* Más lento para ahorrar batería */
+    }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 320px) {
+    #splash-screen img {
+        width: 120px;
+        max-height: 120px;
+    }
+    
+    #splash-screen::before {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+/* ========================================
+   OPTIMIZACIONES DE RENDIMIENTO
+   ======================================== */
+
+/* Hardware acceleration */
+#splash-screen,
+#splash-screen img,
+#splash-screen::before,
+#splash-screen::after {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+/* Suavizado de animaciones */
+#splash-screen * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   ACCESIBILIDAD Y UX
+   ======================================== */
+
+/* Indicador de carga para usuarios con conexiones lentas */
+#splash-screen.loading img {
+    animation: logoAppear 2s ease-out infinite alternate;
+}
+
+/* Reducir animaciones para usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+    #splash-screen img {
+        animation: none;
+        transform: scale(1);
+        opacity: 1;
+    }
+    
+    #splash-screen::before {
+        animation: none;
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+    
+    #splash-screen::after {
+        animation: none;
+    }
+}
+
+/* Focus visible para navegación por teclado */
+#splash-screen:focus-visible {
+    outline: 2px solid rgba(102, 126, 234, 0.8);
+    outline-offset: -2px;
+}
+
+/* ========================================
+   MODO OSCURO Y CLARO
+   ======================================== */
+
+@media (prefers-color-scheme: light) {
+    #splash-screen {
+        background: rgba(255, 255, 255, 0.95);
+    }
+    
+    #splash-screen img {
+        filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.4))
+                drop-shadow(0 0 60px rgba(102, 126, 234, 0.2))
+                drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1));
+    }
+}
